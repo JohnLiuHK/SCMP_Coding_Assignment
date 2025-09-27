@@ -9,9 +9,12 @@ import SwiftUI
 
 @main
 struct StaffManagementApp: App {
+    @StateObject var navigationService = NavigationService()
+    
     var body: some Scene {
         WindowGroup {
             LoginView()
+                .environmentObject(navigationService)
         }
     }
 }

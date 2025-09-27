@@ -8,10 +8,11 @@
 import SwiftUI
 
 struct LoginView: View {
+    @EnvironmentObject private var navigationService: NavigationService
     @StateObject private var viewModel = LoginViewModel()
 
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $navigationService.path) {
             VStack(spacing: 20) {
                 Spacer()
                     .frame(height: 50)
@@ -36,11 +37,14 @@ struct LoginView: View {
 
                 Button(
                     action: {
-
+                        viewModel.login()
                     },
                     label: {
                         if viewModel.isLoading {
-                            ProgressView()
+                            VStack(spacing: 20) {
+                                Text("Logging in...")
+                                ProgressView()
+                            }
                         } else {
                             Text("Login")
                                 .bold()
@@ -55,7 +59,29 @@ struct LoginView: View {
 
                 Spacer()
             }
+            .navigationDestination(for: NavigationDestination.self) { destination in
+                switch destination {
+                case .staff:
+                    StaffView(viewModel: StaffViewModel(token: viewModel.token ?? ""))
+                case .login:
+                    LoginView()
+                }
+            }
         }
         .padding()
+        .alert(
+            "Error", isPresented: Binding(
+                get: { viewModel.errorMessage != nil },
+                set: { _ in viewModel.errorMessage = nil }
+            )
+        ) {
+            Button("OK", role: .cancel) {}
+        } message: {
+            Text(viewModel.errorMessage ?? "")
+        }
+        .onChange(of: viewModel.isLoggedIn) { oldValue, newValue in
+            print("isLoggedIn!");
+            navigationService.path.append(NavigationDestination.staff)
+        }
     }
 }
