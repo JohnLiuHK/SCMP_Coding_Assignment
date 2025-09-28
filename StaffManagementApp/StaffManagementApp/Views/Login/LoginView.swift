@@ -8,14 +8,14 @@
 import SwiftUI
 
 struct LoginView: View {
-    @EnvironmentObject private var navigationService: NavigationService
     @StateObject private var viewModel = LoginViewModel()
 
+    @State private var navigateToStaff = false
+
     var body: some View {
-        NavigationStack(path: $navigationService.path) {
+        NavigationStack {
             VStack(spacing: 20) {
-                Spacer()
-                    .frame(height: 50)
+                Spacer().frame(height: 50)
 
                 Text("Login")
                     .font(.largeTitle)
@@ -35,53 +35,53 @@ struct LoginView: View {
                     .cornerRadius(8)
                     .keyboardType(.emailAddress)
 
-                Button(
-                    action: {
-                        viewModel.login()
-                    },
-                    label: {
-                        if viewModel.isLoading {
-                            VStack(spacing: 20) {
-                                Text("Logging in...")
-                                ProgressView()
-                            }
-                        } else {
-                            Text("Login")
-                                .bold()
-                                .frame(maxWidth: .infinity, maxHeight: 50)
-                                .background(Color.blue)
-                                .foregroundColor(.white)
-                                .cornerRadius(10)
+                Button {
+                    viewModel.login()
+                } label: {
+                    if viewModel.isLoading {
+                        VStack(spacing: 20) {
+                            Text("Logging in...")
+                            ProgressView()
                         }
+                    } else {
+                        Text("Login")
+                            .bold()
+                            .frame(maxWidth: .infinity, maxHeight: 50)
+                            .background(Color.blue)
+                            .foregroundColor(.white)
+                            .cornerRadius(10)
                     }
-                )
+                }
                 .disabled(viewModel.isLoading)
 
                 Spacer()
+
+                // Invisible NavigationLink
+                NavigationLink(
+                    destination: StaffView(viewModel: StaffViewModel(token: viewModel.token ?? "")),
+                    isActive: $navigateToStaff
+                ) {
+                    EmptyView()
+                }
+                .hidden()
             }
-            .navigationDestination(for: NavigationDestination.self) { destination in
-                switch destination {
-                case .staff:
-                    StaffView(viewModel: StaffViewModel(token: viewModel.token ?? ""))
-                case .login:
-                    LoginView()
+            .padding()
+            .alert(
+                "Error",
+                isPresented: Binding(
+                    get: { viewModel.errorMessage != nil },
+                    set: { _ in viewModel.errorMessage = nil }
+                )
+            ) {
+                Button("OK", role: .cancel) {}
+            } message: {
+                Text(viewModel.errorMessage ?? "")
+            }
+            .onChange(of: viewModel.isLoggedIn) { loggedIn in
+                if loggedIn {
+                    navigateToStaff = true
                 }
             }
-        }
-        .padding()
-        .alert(
-            "Error", isPresented: Binding(
-                get: { viewModel.errorMessage != nil },
-                set: { _ in viewModel.errorMessage = nil }
-            )
-        ) {
-            Button("OK", role: .cancel) {}
-        } message: {
-            Text(viewModel.errorMessage ?? "")
-        }
-        .onChange(of: viewModel.isLoggedIn) { oldValue, newValue in
-            print("isLoggedIn!");
-            navigationService.path.append(NavigationDestination.staff)
         }
     }
 }
