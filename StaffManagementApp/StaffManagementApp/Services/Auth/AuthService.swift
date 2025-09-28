@@ -12,7 +12,13 @@ struct AuthService {
         client.request(
             endpoint: APIConstants.loginEndpoint,
             method: "POST",
-            body: ["email": email, "password": password],
+            headers: [
+                "x-api-key": APIConstants.apiKey,
+            ],
+            body: [
+                "email": email,
+                "password": password
+            ],
             completion: completion
         )
     }

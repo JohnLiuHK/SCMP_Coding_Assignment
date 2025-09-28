@@ -14,10 +14,24 @@ class APIClient: NetworkService {
         self.baseURL = baseURL
     }
 
-    func request<T: Decodable>(endpoint: String, method: String = "GET", body: [String: Any]? = nil,
-                               completion: @escaping (Result<T, Error>) -> Void) {
-        guard let url = URL(string: baseURL + endpoint) else {
-            completion(.failure(
+    func request<T: Decodable>(
+        endpoint: String,
+        method: String = "GET",
+        params: [String: Any]? = nil,
+        headers: [String: String]? = nil,
+        body: [String: Any]? = nil,
+        completion: @escaping (Result<T, Error>) -> Void
+    ) {
+        var urlComponents = URLComponents(string: baseURL + endpoint)
+        if let params = params {
+            urlComponents?.queryItems = params.map { key, value in
+                URLQueryItem(name: key, value: "\(value)")
+            }
+        }
+
+        guard let url = urlComponents?.url else {
+            completion(
+                .failure(
                     NSError(
                         domain: "",
                         code: -1,
@@ -30,19 +44,39 @@ class APIClient: NetworkService {
 
         var request = URLRequest(url: url)
         request.httpMethod = method
-        request.setValue(
-            APIConstants.jsonHeader,
-            forHTTPHeaderField: "Content-Type"
-        )
-        request.setValue(APIConstants.apiKey, forHTTPHeaderField: "x-api-key")
 
-        if let body = body {
+        
+        request.setValue(APIConstants.jsonHeader, forHTTPHeaderField: "Content-Type")
+
+        // Headers handling
+        headers?.forEach { key, value in
+            request.setValue(value, forHTTPHeaderField: key)
+        }
+
+        // Body handling
+        if let body = body, method != "GET" {
             request.httpBody = try? JSONSerialization.data(withJSONObject: body)
         }
 
-        URLSession.shared.dataTask(with: request) { data, _, error in
+        // Request
+        URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error {
                 completion(.failure(error))
+                return
+            }
+
+            // Handle HTTP status errors
+            if let httpResponse = response as? HTTPURLResponse,
+                !(200...299).contains(httpResponse.statusCode) {
+                let err = NSError(
+                    domain: "",
+                    code: httpResponse.statusCode,
+                    userInfo: [
+                        NSLocalizedDescriptionKey:
+                            "Server error (\(httpResponse.statusCode))"
+                    ]
+                )
+                completion(.failure(err))
                 return
             }
 
@@ -69,4 +103,5 @@ class APIClient: NetworkService {
             }
         }.resume()
     }
+
 }

@@ -14,12 +14,14 @@ struct StaffService {
         completion: @escaping (Result<StaffListResponseModel, Error>) -> Void
     ) {
         client.request(
-            endpoint: "/users?page=\(page)",
+            endpoint: APIConstants.fetchStaffEndpoint,
             method: "GET",
-//            headers: [
-//                "Accept": "application/json",
-//                "x-api-key": APIConstants.apiKey
-//            ],
+            params: [
+                "page": page
+            ],
+            headers: [
+                "x-api-key": APIConstants.apiKey
+            ],
             completion: completion
         )
     }

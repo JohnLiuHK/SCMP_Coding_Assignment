@@ -12,4 +12,5 @@ struct APIConstants {
     static let apiKey = "reqres-free-v1"
     static let jsonHeader = "application/json"
     static let loginEndpoint = "/login?delay=5"
+    static let fetchStaffEndpoint = "/users"
 }
