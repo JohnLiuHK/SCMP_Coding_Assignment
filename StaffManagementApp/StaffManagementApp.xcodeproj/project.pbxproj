@@ -6,8 +6,19 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXContainerItemProxy section */
+		F7E374FB2E88EF6700FDA695 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F7E374722E87AA7F00FDA695 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F7E374792E87AA7F00FDA695;
+			remoteInfo = StaffManagementApp;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		F7E3747A2E87AA7F00FDA695 /* StaffManagementApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StaffManagementApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F7E374F72E88EF6700FDA695 /* StaffManagementAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StaffManagementAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -16,10 +27,22 @@
 			path = StaffManagementApp;
 			sourceTree = "<group>";
 		};
+		F7E374F82E88EF6700FDA695 /* StaffManagementAppTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = StaffManagementAppTests;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		F7E374772E87AA7F00FDA695 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F7E374F42E88EF6700FDA695 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -33,6 +56,7 @@
 			isa = PBXGroup;
 			children = (
 				F7E3747C2E87AA7F00FDA695 /* StaffManagementApp */,
+				F7E374F82E88EF6700FDA695 /* StaffManagementAppTests */,
 				F7E3747B2E87AA7F00FDA695 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -41,6 +65,7 @@
 			isa = PBXGroup;
 			children = (
 				F7E3747A2E87AA7F00FDA695 /* StaffManagementApp.app */,
+				F7E374F72E88EF6700FDA695 /* StaffManagementAppTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -70,6 +95,29 @@
 			productReference = F7E3747A2E87AA7F00FDA695 /* StaffManagementApp.app */;
 			productType = "com.apple.product-type.application";
 		};
+		F7E374F62E88EF6700FDA695 /* StaffManagementAppTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F7E374FD2E88EF6700FDA695 /* Build configuration list for PBXNativeTarget "StaffManagementAppTests" */;
+			buildPhases = (
+				F7E374F32E88EF6700FDA695 /* Sources */,
+				F7E374F42E88EF6700FDA695 /* Frameworks */,
+				F7E374F52E88EF6700FDA695 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F7E374FC2E88EF6700FDA695 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				F7E374F82E88EF6700FDA695 /* StaffManagementAppTests */,
+			);
+			name = StaffManagementAppTests;
+			packageProductDependencies = (
+			);
+			productName = StaffManagementAppTests;
+			productReference = F7E374F72E88EF6700FDA695 /* StaffManagementAppTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -82,6 +130,10 @@
 				TargetAttributes = {
 					F7E374792E87AA7F00FDA695 = {
 						CreatedOnToolsVersion = 26.0;
+					};
+					F7E374F62E88EF6700FDA695 = {
+						CreatedOnToolsVersion = 26.0;
+						TestTargetID = F7E374792E87AA7F00FDA695;
 					};
 				};
 			};
@@ -100,12 +152,20 @@
 			projectRoot = "";
 			targets = (
 				F7E374792E87AA7F00FDA695 /* StaffManagementApp */,
+				F7E374F62E88EF6700FDA695 /* StaffManagementAppTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		F7E374782E87AA7F00FDA695 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F7E374F52E88EF6700FDA695 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -122,7 +182,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		F7E374F32E88EF6700FDA695 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		F7E374FC2E88EF6700FDA695 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F7E374792E87AA7F00FDA695 /* StaffManagementApp */;
+			targetProxy = F7E374FB2E88EF6700FDA695 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		F7E374832E87AA8100FDA695 /* Debug */ = {
@@ -306,6 +381,46 @@
 			};
 			name = Release;
 		};
+		F7E374FE2E88EF6700FDA695 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.JohnLiu.StaffManagementAppTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/StaffManagementApp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/StaffManagementApp";
+			};
+			name = Debug;
+		};
+		F7E374FF2E88EF6700FDA695 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.JohnLiu.StaffManagementAppTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/StaffManagementApp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/StaffManagementApp";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -323,6 +438,15 @@
 			buildConfigurations = (
 				F7E374862E87AA8100FDA695 /* Debug */,
 				F7E374872E87AA8100FDA695 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F7E374FD2E88EF6700FDA695 /* Build configuration list for PBXNativeTarget "StaffManagementAppTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F7E374FE2E88EF6700FDA695 /* Debug */,
+				F7E374FF2E88EF6700FDA695 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -23,20 +23,26 @@ class LoginViewModel: ObservableObject {
         self.session = session
     }
 
-    func validateInputs() -> Bool {
-        guard email.contains("@"),
-            password.range(of: "^[A-Za-z0-9]{6,10}$", options: .regularExpression) != nil
-        else {
-            errorMessage = "Invalid email or password"
+    func validateEmail() -> Bool {
+        guard email.contains("@") else {
+            errorMessage = "Invalid email"
+            return false
+        }
+        return true
+    }
+    
+    func validatePassword() -> Bool {
+        guard password.range(of: "^[A-Za-z0-9]{6,10}$", options: .regularExpression) != nil else {
+            errorMessage = "Invalid password"
             return false
         }
         return true
     }
 
     func login() {
-        guard validateInputs() else { return }
-
+        guard validateEmail(), validatePassword() else { return }
         isLoading = true
+        
         authService.login(email: email, password: password) { [weak self] result in
             DispatchQueue.main.async {
                 self?.isLoading = false
