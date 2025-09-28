@@ -9,18 +9,14 @@ import Foundation
 import Combine
 
 class StaffViewModel: ObservableObject {
-    @Published var token: String
     @Published var staffList: [StaffModel] = []
     @Published var currentPage = 1
     @Published var totalPages = 1
     @Published var isLoading = false
     @Published var errorMessage: String?
-
-    private var isFetching = false // prevent multiple simultaneous fetches
     private var staffService: StaffService
 
-    init(token: String, staffService: StaffService = StaffService(client: APIClient())) {
-        self.token = token
+    init(staffService: StaffService = StaffService(client: APIClient())) {
         self.staffService = staffService
     }
 

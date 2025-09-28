@@ -8,9 +8,12 @@
 import SwiftUI
 
 struct LoginView: View {
-    @StateObject private var viewModel = LoginViewModel()
-
+    @StateObject private var viewModel: LoginViewModel
     @State private var navigateToStaff = false
+
+    init(sessionManager: SessionManager) {
+        _viewModel = StateObject(wrappedValue: LoginViewModel(session: sessionManager))
+    }
 
     var body: some View {
         NavigationStack {
@@ -33,7 +36,6 @@ struct LoginView: View {
                     .frame(height: 50)
                     .background(Color(UIColor.systemGray6))
                     .cornerRadius(8)
-                    .keyboardType(.emailAddress)
 
                 Button {
                     viewModel.login()
@@ -55,15 +57,6 @@ struct LoginView: View {
                 .disabled(viewModel.isLoading)
 
                 Spacer()
-
-                // Invisible NavigationLink
-                NavigationLink(
-                    destination: StaffView(viewModel: StaffViewModel(token: viewModel.token ?? "")),
-                    isActive: $navigateToStaff
-                ) {
-                    EmptyView()
-                }
-                .hidden()
             }
             .padding()
             .alert(
@@ -77,11 +70,15 @@ struct LoginView: View {
             } message: {
                 Text(viewModel.errorMessage ?? "")
             }
-            .onChange(of: viewModel.isLoggedIn) { loggedIn in
-                if loggedIn {
-                    navigateToStaff = true
-                }
+            .onChange(of: viewModel.session.isLoggedIn) { _, loggedIn in
+                navigateToStaff = loggedIn
             }
+            .onAppear {
+                navigateToStaff = false
+            }
+            .navigationDestination(isPresented: $navigateToStaff) {
+                StaffView(viewModel: StaffViewModel())
+             }
         }
     }
 }

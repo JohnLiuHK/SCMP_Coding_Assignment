@@ -14,12 +14,13 @@ class LoginViewModel: ObservableObject {
     @Published var password = ""
     @Published var isLoading = false
     @Published var errorMessage: String?
-    @Published var isLoggedIn = false
-    @Published var token: String?
     private let authService: AuthService
+    let session: SessionManager
 
-    init(authService: AuthService = AuthService(client: APIClient())) {
+    init(authService: AuthService = AuthService(client: APIClient()),
+         session: SessionManager) {
         self.authService = authService
+        self.session = session
     }
 
     func validateInputs() -> Bool {
@@ -41,8 +42,7 @@ class LoginViewModel: ObservableObject {
                 self?.isLoading = false
                 switch result {
                 case .success(let loginResponse):
-                    self?.token = loginResponse.token
-                    self?.isLoggedIn = true
+                    self?.session.login(with: loginResponse.token)
                 case .failure(let error):
                     self?.errorMessage = error.localizedDescription
                 }

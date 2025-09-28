@@ -7,10 +7,13 @@
 import SwiftUI
 
 struct StaffView: View {
+    @EnvironmentObject var sessionManager: SessionManager
     @StateObject var viewModel: StaffViewModel
 
     var body: some View {
         List {
+            Text("Token: \(sessionManager.token ?? "")")
+            
             if viewModel.staffList.isEmpty {
                 HStack {
                     Spacer()
@@ -58,6 +61,9 @@ struct StaffView: View {
         .task {
             viewModel.fetchStaffList()
         }
+        .onDisappear(perform: {
+            sessionManager.logout()
+        })
         .navigationTitle("Staff List")
         .alert("Error", isPresented: Binding(
             get: { viewModel.errorMessage != nil },

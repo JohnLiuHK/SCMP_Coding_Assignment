@@ -9,9 +9,12 @@ import SwiftUI
 
 @main
 struct StaffManagementApp: App {
+    @StateObject private var sessionManager = SessionManager()
+
     var body: some Scene {
         WindowGroup {
-            LoginView()
+            LoginView(sessionManager: sessionManager)
+                .environmentObject(sessionManager)
         }
     }
 }
